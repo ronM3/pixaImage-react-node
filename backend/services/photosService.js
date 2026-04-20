@@ -1,7 +1,7 @@
 const photosSA = require("../servicesAgents/photosSA");
 
-async function getPhotos(category) {
-  return await photosSA.getPhotos(category);
+async function getPhotos(category, q) {
+  return await photosSA.getPhotos(category, q);
 }
 
 async function sortPhotosById(photos, sortOrder) {

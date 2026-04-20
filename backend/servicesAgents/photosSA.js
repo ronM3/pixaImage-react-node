@@ -1,10 +1,22 @@
 const photosHelper = require("../helpers/photos/SAHelpers");
 const serviceHelper = require("../helpers/photos/serviceHelper");
 
-async function getPhotos(category) {
-  const endPoint = category ? `${process.env.API_ENDPOINT}&q=${category}&per_page=200` : `${process.env.API_ENDPOINT}&q&per_page=200`
-  const allPhotos = await photosHelper.cacheHandler(60, category, async () => {
+async function getPhotos(category, q) {
+  const normalizedCategory = typeof category === "string" ? category.trim() : "";
+  const normalizedQuery = typeof q === "string" ? q.trim() : "";
+  const cacheKey = `__express__photos__${normalizedCategory || "all"}__${normalizedQuery || ""}`;
+  const cacheKeyFragment = `${normalizedCategory || "all"}__${normalizedQuery || ""}`;
 
+  let endPoint = `${process.env.API_ENDPOINT}&per_page=200`;
+  if (normalizedCategory) {
+    endPoint += `&category=${encodeURIComponent(normalizedCategory)}`;
+  }
+  if (normalizedQuery) {
+    endPoint += `&q=${encodeURIComponent(normalizedQuery)}`;
+  }
+
+  console.log(cacheKey);
+  const allPhotos = await photosHelper.cacheHandler(60, cacheKeyFragment, async () => {
     return await photosHelper.getAsync(endPoint);
   });
   return allPhotos;

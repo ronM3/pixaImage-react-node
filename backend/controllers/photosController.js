@@ -7,9 +7,10 @@ const serviceHelper = require("../helpers/photos/serviceHelper")
 
 router.get("/",paginationMiddleware(9), async (req, res, next) => {
     try {
-        const { category} = req.query;
+        const { category } = req.query;
+        const q = typeof req.query.q === "string" ? req.query.q.trim() : "";
         const { startIndex, endIndex } = req.pagination;
-        const photos = await photosService.getPhotos(category);
+        const photos = await photosService.getPhotos(category, q);
         const paginatedPhotos = photos.slice(startIndex, endIndex);
         const pagination = serviceHelper.calculatePagination(photos, 9, req.pagination.page);
     

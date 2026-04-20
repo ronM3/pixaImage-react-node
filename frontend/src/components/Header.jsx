@@ -1,12 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchPhotos, updateCurrentQuery } from "../redux/features/photos/photosAction";
 import "../assets/styles/header.css";
 
 const Header = () => {
+  const [searchValue, setSearchValue] = useState("");
   const [theme, setTheme] = useState(() => {
     if (typeof document === "undefined") return "light";
     return document.documentElement.getAttribute("data-theme") || "light";
   });
   const [scrolled, setScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const currentCategory = useSelector((s) => s.photosState.currentCategory);
+  const dispatch = useDispatch();
+  const currentCategoryRef = useRef(currentCategory);
+  const dispatchRef = useRef(dispatch);
+  const hasInitializedSearch = useRef(false);
 
   const toggleTheme = () => {
     const next = theme === "dark" ? "light" : "dark";
@@ -31,7 +40,28 @@ const Header = () => {
 
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    currentCategoryRef.current = currentCategory;
+  }, [currentCategory]);
+
+  useEffect(() => {
+    dispatchRef.current = dispatch;
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!hasInitializedSearch.current) {
+      hasInitializedSearch.current = true;
+      return;
+    }
+
+    const handle = setTimeout(() => {
+      dispatchRef.current(updateCurrentQuery(searchValue));
+      dispatchRef.current(fetchPhotos(currentCategoryRef.current, 1, searchValue));
+    }, 400);
+
+    return () => clearTimeout(handle);
+  }, [searchValue]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prevState) => !prevState);
@@ -72,8 +102,10 @@ const Header = () => {
           <input
             className="search__input"
             type="search"
-            placeholder="Search photos, tags, colors…"
+            placeholder="Search photos, tags, colors..."
             aria-label="Search photos"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
           />
         </div>
         <nav
@@ -156,4 +188,5 @@ const Header = () => {
     </header>
   );
 };
+
 export default Header;

@@ -13,7 +13,8 @@ const initialState = {
     loading: false,
     error: null,
     currentPage:1,
-    currentCategory: null
+    currentCategory: null,
+    currentQuery: ""
   };
 
   const photosDisplaySlice = createSlice({
@@ -34,9 +35,12 @@ const initialState = {
       },
       setCurrentCategory: (state, action) =>{
         state.currentCategory = action.payload
+      },
+      updateCurrentQuery: (state, action) => {
+        state.currentQuery = action.payload;
       }
     },
   });
 
-export const {setPhotosData, setPhotosLoading, setPhotosError, setCurrentPage, setCurrentCategory} = photosDisplaySlice.actions;
+export const {setPhotosData, setPhotosLoading, setPhotosError, setCurrentPage, setCurrentCategory, updateCurrentQuery} = photosDisplaySlice.actions;
 export default photosDisplaySlice.reducer;
