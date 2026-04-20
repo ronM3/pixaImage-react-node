@@ -1,44 +1,84 @@
-.buttons-container {
+.pagination {
   display: flex;
   justify-content: center;
-  gap: var(--space-4);
-  margin-top: var(--space-8);
-}
-
-.button {
-  background-color: transparent;
-  color: #504545;
-  border: 1px solid #000000;
-  display: inline-block;
-  text-decoration: none;
-  margin-top: 7px;
-  letter-spacing: 0.8px;
-  font-size: 15px;
-  position: relative;
-  padding: 0.6rem 1.5rem;
-  font-weight: 700;
-  line-height: 1;
-  z-index: 1;
-  transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
   align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-10);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.pagination__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-4);
+  height: 36px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: var(--fs-13);
+  font-weight: 500;
   cursor: pointer;
-  box-shadow: inset 0 0 0 0 #f4e5f6;
-  transition: ease-out 0.8s;
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
 }
 
-.button:disabled {
-  background: #fff;
-  color: #ccc;
-  cursor: no-drop;
+.pagination__btn:hover:not(:disabled) {
+  background: var(--color-surface-2);
+  border-color: var(--color-border-strong);
 }
 
-.button:hover {
-  box-shadow: inset 400px 0 0 0 #d49d9d;
-  color: black;
+.pagination__btn:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
-@media only screen and (max-width: 768px) {
-  .buttons-container {
-    width: 100%;
+.pagination__btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.pagination__btn:disabled {
+  color: var(--color-text-faint);
+  background: var(--color-surface);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.pagination__btn svg {
+  flex-shrink: 0;
+}
+
+.pagination__indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 72px;
+  justify-content: center;
+  font-size: var(--fs-13);
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.pagination__current {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.pagination__sep {
+  color: var(--color-text-faint);
+}
+
+@media (max-width: 640px) {
+  .pagination {
+    gap: var(--space-2);
+  }
+
+  .pagination__btn {
+    padding: 0 var(--space-3);
   }
 }
