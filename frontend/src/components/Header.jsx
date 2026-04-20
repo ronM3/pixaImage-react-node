@@ -2,7 +2,22 @@ import { useState, useEffect } from "react";
 import "../assets/styles/header.css";
 
 const Header = () => {
+  const [theme, setTheme] = useState(() => {
+    if (typeof document === "undefined") return "light";
+    return document.documentElement.getAttribute("data-theme") || "light";
+  });
   const [scrolled, setScrolled] = useState(false);
+
+  const toggleTheme = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    document.documentElement.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem("pixa-theme", next);
+    } catch (e) {
+      // Ignore storage failures and keep the in-memory toggle working.
+    }
+  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -89,20 +104,41 @@ const Header = () => {
             </li>
           </ul>
         </nav>
-        <button className="theme-toggle" type="button" aria-label="Toggle theme">
-          <svg
-            aria-hidden="true"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M13 9.5 A5 5 0 0 1 6.5 3 A5.5 5.5 0 1 0 13 9.5 Z"
+        <button
+          className="theme-toggle"
+          type="button"
+          onClick={toggleTheme}
+          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          {theme === "dark" ? (
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 16 16"
+              fill="none"
               stroke="currentColor"
               strokeWidth="1.5"
+              aria-hidden="true"
+            >
+              <circle cx="8" cy="8" r="3" />
+              <path
+                d="M8 1.5 V3 M8 13 V14.5 M1.5 8 H3 M13 8 H14.5 M3.3 3.3 L4.4 4.4 M11.6 11.6 L12.7 12.7 M3.3 12.7 L4.4 11.6 M11.6 4.4 L12.7 3.3"
+                strokeLinecap="round"
+              />
+            </svg>
+          ) : (
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 16 16"
               fill="none"
-            />
-          </svg>
+              stroke="currentColor"
+              strokeWidth="1.5"
+              aria-hidden="true"
+            >
+              <path d="M13 9.5 A5 5 0 0 1 6.5 3 A5.5 5.5 0 1 0 13 9.5 Z" />
+            </svg>
+          )}
         </button>
         <button
           id="mobileMenuTrigger"
