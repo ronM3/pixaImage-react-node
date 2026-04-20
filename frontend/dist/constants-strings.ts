@@ -1,1 +1,0 @@
-export const SELECT_CATEGORY = 'Select Category';
