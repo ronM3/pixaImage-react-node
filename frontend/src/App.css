@@ -10,6 +10,7 @@ body {
   font-weight: 400;
   overflow-x: hidden;
   position: relative;
-  color: #fff !important;
-  font-family: "Centra", sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+  font-family: var(--font-sans);
 }

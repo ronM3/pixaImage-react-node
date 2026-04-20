@@ -1,9 +1,8 @@
 .buttons-container {
-  position: absolute;
-  top: 14vh;
   display: flex;
-  justify-content: space-between;
-  width: 83%;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
 }
 
 .button {
