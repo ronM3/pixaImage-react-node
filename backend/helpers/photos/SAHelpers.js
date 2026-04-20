@@ -9,9 +9,9 @@ async function getAsync(endpoint){
       } catch (error) {
         const detail = error.response
           ? `Pixabay ${error.response.status}: ${JSON.stringify(error.response.data)}`
-          : error.message;
-        console.error('Pixabay API error:', detail);
-        throw new Error(detail);
+          : (error.message || String(error));
+        console.error('Pixabay API error:', detail, '| endpoint:', endpoint?.slice(0, 50));
+        throw new Error(detail || 'Pixabay request failed');
       }
 }  
 async function cacheHandler(duration, category, httpCallBack) {
