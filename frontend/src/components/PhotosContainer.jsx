@@ -4,7 +4,7 @@ import { fetchPhotos, goToPrevPage, goToNextPage } from "../redux/features/photo
 import { LoadingSpinner } from "./LoadingSpinner";
 import ButtonsContainer from "./ButtonsContainer";
 import "../assets/styles/photosContainer.css";
-import { TypeSelectModal } from "./TypeSelectModal";
+import PhotoLightbox from "./PhotoLightbox";
 import ImageCard from "./ImageCard";
 import CategoryChips from "./CategoryChips";
 
@@ -34,15 +34,6 @@ export const PhotosContainer = () => {
     setSelectedPhoto("");
   };
 
-  const handleModalBackdropClick = (event) => {
-    event.stopPropagation();
-  };
-
-  const handleTypeSelection = (type) => {
-    dispatch(fetchPhotos(type));
-    setShowModal(false);
-  };
-
   const handlePhotoClick = (photo) => {
     setSelectedPhoto(photo);
     setShowModal(true);
@@ -51,15 +42,12 @@ export const PhotosContainer = () => {
   return (
     <section className="photos-container">
       <CategoryChips />
-      {showModal && (
-        <div className="modalBackdrop" onClick={handleModalBackdropClick}>
-          <TypeSelectModal
-            setOpenModal={setShowModal}
-            handleTypeSelection={handleTypeSelection}
-            handleModalClose={handleModalClose}
-            selectedPhoto={selectedPhoto}
-          />
-        </div>
+      {showModal && selectedPhoto && (
+        <PhotoLightbox
+          photo={selectedPhoto}
+          onClose={handleModalClose}
+          onNavigate={(nextPhoto) => setSelectedPhoto(nextPhoto)}
+        />
       )}
       {loading ? (
         <LoadingSpinner />
