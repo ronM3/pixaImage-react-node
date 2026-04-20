@@ -1,20 +1,69 @@
-import React from "react";
+import PropTypes from "prop-types";
 import "../assets/styles/imageCard.css";
-const Item = ({ photo, handlePhotoClick }) => {
+
+const ImageCard = ({ photo, handlePhotoClick }) => {
   const handleClick = (event) => {
     event.stopPropagation();
     handlePhotoClick(photo);
   };
-  
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleClick(event);
+    }
+  };
+
+  // Preserve native aspect ratio to keep masonry honest.
+  const aspectRatio =
+    photo.imageWidth && photo.imageHeight
+      ? `${photo.imageWidth} / ${photo.imageHeight}`
+      : "4 / 3";
+
   return (
-    <div className="photo-item" onClick={handleClick}>
-      <div className="photo-overlay">
-        <img src={photo.largeImageURL} alt={photo.title} />
-        <div className="photo_user">Author: {photo.user}</div>
-        <div className="photo-name">{photo.tags}</div>
+    <article
+      className="photo-card"
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-label={`View photo by ${photo.user}${
+        photo.tags ? `: ${photo.tags}` : ""
+      }`}
+    >
+      <div className="photo-card__media" style={{ aspectRatio }}>
+        <img
+          src={photo.webformatURL || photo.largeImageURL}
+          alt={photo.tags || `Photo by ${photo.user}`}
+          loading="lazy"
+          decoding="async"
+          className="photo-card__img"
+        />
+        <div className="photo-card__overlay" aria-hidden="true">
+          <div className="photo-card__meta">
+            <span className="photo-card__user">{photo.user}</span>
+            {photo.tags && (
+              <span className="photo-card__tags">
+                {photo.tags.split(",")[0].trim()}
+              </span>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
+    </article>
   );
 };
 
-export default Item;
+ImageCard.propTypes = {
+  photo: PropTypes.shape({
+    imageWidth: PropTypes.number,
+    imageHeight: PropTypes.number,
+    webformatURL: PropTypes.string,
+    largeImageURL: PropTypes.string,
+    user: PropTypes.string,
+    tags: PropTypes.string,
+  }).isRequired,
+  handlePhotoClick: PropTypes.func.isRequired,
+};
+
+export default ImageCard;

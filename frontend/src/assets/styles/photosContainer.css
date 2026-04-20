@@ -7,10 +7,20 @@
 }
 
 .photos-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-5);
+  column-count: 3;
+  column-gap: var(--space-3);
+}
+
+@media (max-width: 1024px) {
+  .photos-grid {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .photos-grid {
+    column-count: 1;
+  }
 }
 
 @media (max-width: 768px) {
