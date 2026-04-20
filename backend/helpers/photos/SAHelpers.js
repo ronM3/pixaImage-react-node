@@ -7,8 +7,11 @@ async function getAsync(endpoint){
         const { data: { hits } } = await axios.get(endpoint);
         return hits;
       } catch (error) {
-        console.error('Error:', error.message);
-        throw new Error("General error");
+        const detail = error.response
+          ? `Pixabay ${error.response.status}: ${JSON.stringify(error.response.data)}`
+          : error.message;
+        console.error('Pixabay API error:', detail);
+        throw new Error(detail);
       }
 }  
 async function cacheHandler(duration, category, httpCallBack) {
