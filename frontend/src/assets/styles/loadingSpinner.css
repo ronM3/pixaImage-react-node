@@ -1,0 +1,41 @@
+.skeleton-grid {
+  column-count: 3;
+  column-gap: var(--space-3);
+}
+
+@media (max-width: 1024px) {
+  .skeleton-grid {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .skeleton-grid {
+    column-count: 1;
+  }
+}
+
+.skeleton-card {
+  width: 100%;
+  break-inside: avoid;
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-md);
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-2) 0%,
+    var(--color-surface) 50%,
+    var(--color-surface-2) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}

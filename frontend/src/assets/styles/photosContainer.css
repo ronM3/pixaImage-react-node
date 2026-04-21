@@ -11,6 +11,41 @@
   column-gap: var(--space-3);
 }
 
+.photos-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-16) var(--space-4);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.photos-empty svg {
+  color: var(--color-text-faint);
+  margin-bottom: var(--space-2);
+}
+
+.photos-empty__title {
+  font-size: var(--fs-16);
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.photos-empty__hint {
+  font-size: var(--fs-13);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.photos-error {
+  padding: var(--space-8);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
 @media (max-width: 1024px) {
   .photos-grid {
     column-count: 2;

@@ -18,7 +18,7 @@ export const PhotosContainer = () => {
 
   useEffect(() => {
     dispatch(fetchPhotos());
-  }, []);
+  }, [dispatch]);
 
   const handlePrevPage = () => {
     dispatch(goToPrevPage(currentCategory, currentPage));
@@ -52,7 +52,26 @@ export const PhotosContainer = () => {
       {loading ? (
         <LoadingSpinner />
       ) : error ? (
-        <p>Error: {error}</p>
+        <p className="photos-error">Error: {error}</p>
+      ) : data.items && data.items.length === 0 ? (
+        <div className="photos-empty" role="status">
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            aria-hidden="true"
+          >
+            <circle cx="11" cy="11" r="7" />
+            <path d="M16 16 L21 21" strokeLinecap="round" />
+          </svg>
+          <p className="photos-empty__title">No photos found</p>
+          <p className="photos-empty__hint">
+            Try a different search or category.
+          </p>
+        </div>
       ) : (
         data.items && (
           <div className="photos-grid">
