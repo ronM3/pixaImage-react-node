@@ -5,10 +5,29 @@
   scrollbar-width: none;
   padding: var(--space-2) 0;
   margin-bottom: var(--space-6);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    black 0,
+    black calc(100% - 40px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    black 0,
+    black calc(100% - 40px),
+    transparent 100%
+  );
 }
 
 .category-chips::-webkit-scrollbar {
   display: none;
+}
+
+@media (min-width: 1024px) {
+  .category-chips {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
 }
 
 .chip {

@@ -190,6 +190,25 @@
     gap: var(--space-3);
   }
 
+  .wordmark__name,
+  .wordmark__slash,
+  .wordmark__sub {
+    display: none;
+  }
+
+  .wordmark {
+    gap: 0;
+  }
+
+  .wordmark__mark {
+    width: 24px;
+    height: 24px;
+  }
+
+  .search__input {
+    font-size: var(--fs-13);
+  }
+
   .nav-links {
     display: none;
     position: absolute;
