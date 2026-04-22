@@ -12,7 +12,6 @@
 }
 
 .photo-card:hover {
-  transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
@@ -52,11 +51,18 @@
   object-fit: cover;
   display: block;
   opacity: 0;
-  transition: opacity 600ms ease;
+  transform: scale(1);
+  transition:
+    opacity 600ms ease,
+    transform 600ms ease;
 }
 
 .photo-card__img.is-loaded {
   opacity: 1;
+}
+
+.photo-card:hover .photo-card__img.is-loaded {
+  transform: scale(1.04);
 }
 
 .photo-card__overlay {

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchPhotos,
@@ -21,7 +22,22 @@ const CATEGORIES = [
 const CategoryChips = () => {
   const { currentCategory } = useSelector((state) => state.photosState);
   const dispatch = useDispatch();
+  const containerRef = useRef(null);
   const activeValue = currentCategory || "";
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const activeBtn = container.querySelector(".chip.is-active");
+    if (activeBtn) {
+      activeBtn.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
+  }, [activeValue]);
 
   const handleSelect = (value) => {
     dispatch(updateCurrentCategory(value));
@@ -30,6 +46,7 @@ const CategoryChips = () => {
 
   return (
     <div
+      ref={containerRef}
       className="category-chips"
       role="tablist"
       aria-label="Filter by category"

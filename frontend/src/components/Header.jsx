@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPhotos, updateCurrentQuery } from "../redux/features/photos/photosAction";
+import PixaLogo from "../assets/images/pixa-logo.svg?react";
 import "../assets/styles/header.css";
 
 const Header = () => {
@@ -71,6 +72,7 @@ const Header = () => {
     <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
       <div className="site-header__inner">
         <a className="wordmark" href="/">
+          <PixaLogo className="wordmark__mark" aria-hidden="true" />
           <span className="wordmark__name">pixa</span>
           <span className="wordmark__slash">/</span>
           <span className="wordmark__sub">image</span>
