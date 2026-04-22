@@ -136,7 +136,7 @@
 
 .lightbox__close,
 .lightbox__nav {
-  position: absolute;
+  position: fixed;
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -161,17 +161,21 @@
 }
 
 .lightbox__close {
+  position: fixed;
   top: var(--space-5);
   right: var(--space-5);
   width: 40px;
   height: 40px;
+  z-index: 1001;
 }
 
 .lightbox__nav {
+  position: fixed;
   top: 50%;
   transform: translateY(-50%);
   width: 44px;
   height: 44px;
+  z-index: 1001;
 }
 
 .lightbox__nav--prev {

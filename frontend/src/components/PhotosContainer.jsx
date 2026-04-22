@@ -7,14 +7,17 @@ import "../assets/styles/photosContainer.css";
 import PhotoLightbox from "./PhotoLightbox";
 import ImageCard from "./ImageCard";
 import CategoryChips from "./CategoryChips";
+import Hero from "./Hero";
+import ResultsHeader from "./ResultsHeader";
 
 export const PhotosContainer = () => {
-  const { data, loading, error, currentPage, currentCategory } = useSelector(
-    (state) => state.photosState
-  );
+  const { data, loading, error, currentPage, currentCategory, currentQuery } =
+    useSelector((state) => state.photosState);
   const [showModal, setShowModal] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState("");
   const dispatch = useDispatch();
+  const hasActiveCategory = Boolean(currentCategory);
+  const hasActiveQuery = Boolean(currentQuery?.trim());
 
   useEffect(() => {
     dispatch(fetchPhotos());
@@ -41,6 +44,8 @@ export const PhotosContainer = () => {
 
   return (
     <section className="photos-container">
+      {!hasActiveCategory && !hasActiveQuery && currentPage === 1 && <Hero />}
+      {(hasActiveCategory || hasActiveQuery) && <ResultsHeader />}
       <CategoryChips />
       {showModal && selectedPhoto && (
         <PhotoLightbox
